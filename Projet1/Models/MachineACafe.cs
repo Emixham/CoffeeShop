@@ -14,6 +14,8 @@ namespace Projet1.Models
         {
             this.titre = titre;
             this.id = id;
+
+
         }
         public int Id => id;
         public string Titre => titre;
