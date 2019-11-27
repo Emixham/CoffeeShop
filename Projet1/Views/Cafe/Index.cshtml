@@ -1,0 +1,10 @@
+﻿ @model IEnumerable<MachineACafe>
+
+@{
+}
+
+@foreach(var machine in Model) {
+    <div>@machine.Titre</div>
+    @Html.ActionLink("En savoir plus", "Detail", new { id = machine.Id })
+
+}
