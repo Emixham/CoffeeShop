@@ -1,6 +1,6 @@
 using System;
 
-namespace Projet1.Models
+namespace CoffeeShop.Models
 {
     public class ErrorViewModel
     {

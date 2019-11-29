@@ -1,10 +1,43 @@
-﻿ @model IEnumerable<MachineACafe>
+﻿@model IEnumerable<CoffeeShop.Models.MachineACafeEntity>
 
 @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@foreach(var machine in Model) {
-    <div>@machine.Titre</div>
-    @Html.ActionLink("En savoir plus", "Detail", new { id = machine.Id })
+<h1>Index</h1>
 
+<p>
+    <a asp-action="Creer">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrlHttps)
+            </th>
+            <th> Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                <img src="@item.UrlHttps" width="800" height="500" />
+                <!--@Html.DisplayFor(modelItem => item.UrlHttps)-->
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
 }
+    </tbody>
+</table>
