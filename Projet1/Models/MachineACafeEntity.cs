@@ -7,7 +7,7 @@ namespace CoffeeShop.Models
 {
     public class MachineACafeEntity
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Nom { get; set; }
         public string Marque { get; set; }
         public string Image { get; set; }

@@ -14,15 +14,15 @@ namespace CoffeeShop.Controllers
     public class CafeController : Controller
     {
         const string ChaineConnexion = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Kenny\source\repos\CoffeeShop\Projet1\Data\DataCoffee.mdf;Integrated Security=True;Connect Timeout=30";
-      
+        private IMachineRepo repo;
+
+        public CafeController(IMachineRepo repo)
+        {
+            this.repo = repo;
+        }
         public IActionResult Index()
         {
-            using (var connection = new SqlConnection(ChaineConnexion))
-            {
-                var liste = connection.Query<MachineACafeEntity>("SELECT * FROM MachineACafe");
-
-                return View(liste);
-            }
+            return View(repo.All);
         }
 
         public IActionResult Creer()
@@ -30,17 +30,30 @@ namespace CoffeeShop.Controllers
             return View();
         }
 
+        public IActionResult Details(int id)
+        { 
+            var machinecafe = repo.GetById(id);
+
+            if (machinecafe == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(machinecafe);
+            }
+     
+        }
+
         [HttpPost] //Attribut
         public IActionResult Creer(MachineACafeEntity nouveau)
         {
             if (ModelState.IsValid)
             {
-                using (var connection = new SqlConnection(ChaineConnexion))
-                {
-                    nouveau.UserId = 1;
-                    connection.Execute("INSERT INTO MachineACafe (Nom, Marque, Image, Prix, Disponible, UserId ) VALUES (@Nom, @Marque, @Image, @Prix, @Disponible, @UserId)", nouveau);
-                }
-                //Enregistrer les informations entrer dans le formulaire dans la bdd
+
+
+                nouveau.UserId = 1;
+                repo.Save(nouveau);
                 return RedirectToAction(nameof(Index));
             }
             return View();

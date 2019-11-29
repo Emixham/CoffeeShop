@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using CoffeeShop.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +27,8 @@ namespace CoffeeShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IDbConnection>(sp => new SqlConnection(Configuration.GetConnectionString("CafeBdd")));
+            services.AddScoped<IMachineRepo, MachineRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
